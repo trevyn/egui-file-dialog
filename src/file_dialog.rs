@@ -894,6 +894,25 @@ impl FileDialog {
         }
     }
 
+    pub fn pending_selection(&self) -> Option<PathBuf> {
+        if !self.is_selection_valid() {
+            return None;
+        }
+
+        match &self.mode {
+            DialogMode::SelectFile => {
+                // Should always contain a value since `is_selection_valid` is used to
+                // validate the selection.
+                if let Some(item) = self.selected_item.clone() {
+                    Some(item.to_path_buf())
+                } else {
+                    None
+                }
+            }
+            _ => None,
+        }
+    }
+
     /// Returns the directory or file that the user selected, or the target file
     /// if the dialog is in `DialogMode::SaveFile` mode.
     /// Unlike `FileDialog::selected`, this method returns the selected path only once and

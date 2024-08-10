@@ -24,6 +24,10 @@ impl eframe::App for MyApp {
                 self.file_dialog.select_file();
             }
 
+            ui.label(format!(
+                "pending_selection: {:?}",
+                self.file_dialog.pending_selection()
+            ));
             ui.label(format!("Selected file: {:?}", self.selected_file));
 
             if let Some(path) = self.file_dialog.update(ctx).selected() {
